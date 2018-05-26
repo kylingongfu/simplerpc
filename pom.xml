@@ -22,7 +22,7 @@
             <version>4.1.25.Final</version>
         </dependency>
     </dependencies>
-   <!-- <repositories>
+    <repositories>
         <repository>
             <id>spring-snapshots</id>
             <name>Spring Snapshots</name>
@@ -31,5 +31,5 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-    </repositories>-->
+    </repositories>
 </project>
