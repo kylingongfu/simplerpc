@@ -16,7 +16,7 @@
 package com.zhang.rpc.server.netty;
 
 import com.zhang.rpc.server.RPCServerContext;
-import com.zhang.rpc.RequstBean;
+import com.zhang.rpc.RPCRequest;
 import com.zhang.rpc.server.ServiceInvoker;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -35,7 +35,7 @@ public class ObjectServerHandler extends ChannelInboundHandlerAdapter {
         ServiceInvoker serviceInvoker = RPCServerContext.getInstance().getServiceInvoker();
         Object result = null;
         try {
-            result = serviceInvoker.invoke((RequstBean) msg);
+            result = serviceInvoker.invoke((RPCRequest) msg);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {

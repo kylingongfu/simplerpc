@@ -4,7 +4,7 @@ package com.zhang.rpc;
  * 实体类，报文的封装类，用于网络消息传输
  * Created by zhangc on 2018/5/25.
  */
-public class RequstBean {
+public class RPCRequest {
     private String className;
 
     public String getMethodName() {

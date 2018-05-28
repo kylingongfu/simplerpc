@@ -29,6 +29,7 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
                 //.setServiceBean(objMap)
                 .setServiceInvoker(new ServiceInvoker(objMap));
         try {
+            //启动netty服务端
             new ServerNetty(sc).ready();
         } catch (Exception e) {
             e.printStackTrace();
