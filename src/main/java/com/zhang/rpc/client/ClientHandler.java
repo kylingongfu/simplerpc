@@ -1,4 +1,4 @@
-package com.zhang.rpc.client.com.zhang.rpc.client;
+package com.zhang.rpc.client;
 
 import com.zhang.rpc.RPCResponse;
 import io.netty.channel.ChannelHandlerContext;

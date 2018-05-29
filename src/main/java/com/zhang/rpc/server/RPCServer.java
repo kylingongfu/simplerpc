@@ -1,6 +1,8 @@
 package com.zhang.rpc.server;
 
 import com.zhang.rpc.server.netty.ServerNetty;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -13,6 +15,7 @@ import java.util.Map;
  * Created by zhangc on 2018/5/24.
  */
 public class RPCServer implements ApplicationContextAware, InitializingBean {
+    Logger logger = LogManager.getLogger(RPCServer.class);
     private ApplicationContext applicationContex;
 
 
@@ -22,7 +25,6 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
     }
 
     private void startServer() {
-        System.out.println("aaaaaaaaaaaaaaaaa");
         Map objMap = loadBusiBeans();
         RPCServerContext sc = RPCServerContext.getInstance()
                 .setPort(8888)
@@ -45,6 +47,7 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
      */
     private Map<String, Object> loadBusiBeans() {
         Map<String, Object> objectMap = applicationContex.getBeansWithAnnotation(RPCService.class);
+        logger.debug("load busi service beans :"+objectMap);
 
         return objectMap;
     }
