@@ -16,10 +16,11 @@ import io.netty.handler.codec.serialization.ObjectEncoder;
  */
 public class RPCClient {
     private static Object obj = new Object();
-    private RPCResponse response = null;
 
     public <T> T send(RPCRequest rb) throws InterruptedException {
         // Configure the client.
+        final RPCResponse response = new RPCResponse();
+
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap();
@@ -34,7 +35,7 @@ public class RPCClient {
                             p.addLast(
                                     new ObjectEncoder(),
                                     new ObjectDecoder(ClassResolvers.cacheDisabled(null)),
-                                    new ClientHandler(response));
+                                    new ClientHandler(response,obj));
                         }
                     });
 
@@ -51,7 +52,7 @@ public class RPCClient {
             synchronized (obj) {
                 obj.wait();
             }
-            if (response != null) {
+            if (response != null && response.getResult() != null) {
                 future.channel().closeFuture().sync();
             }
             return (T) response.getResult();

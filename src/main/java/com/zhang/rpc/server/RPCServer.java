@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -46,7 +47,12 @@ public class RPCServer implements ApplicationContextAware, InitializingBean {
      * 将rpc注解标注的业务类存放到容器中
      */
     private Map<String, Object> loadBusiBeans() {
-        Map<String, Object> objectMap = applicationContex.getBeansWithAnnotation(RPCService.class);
+        Map<String, Object> beanMap = applicationContex.getBeansWithAnnotation(RPCService.class);
+        Map<String, Object> objectMap = new HashMap<>();
+        for (Object bean:beanMap.values()){
+            String interfaceName = bean.getClass().getAnnotation(RPCService.class).value().getName();
+            objectMap.put(interfaceName,bean);
+        }
         logger.debug("load busi service beans :"+objectMap);
 
         return objectMap;

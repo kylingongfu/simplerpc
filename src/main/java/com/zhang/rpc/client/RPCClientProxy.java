@@ -36,7 +36,7 @@ public class RPCClientProxy {
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
             RPCRequest rb = new RPCRequest();
-            rb.setClassName(clazz.getSimpleName());
+            rb.setClassName(clazz.getName());
             rb.setMethodName(method.getName());
             rb.setParameterTypes(method.getParameterTypes());
             rb.setParameters(args);

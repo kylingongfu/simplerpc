@@ -15,6 +15,7 @@
  */
 package com.zhang.rpc.server.netty;
 
+import com.zhang.rpc.RPCResponse;
 import com.zhang.rpc.server.RPCServerContext;
 import com.zhang.rpc.RPCRequest;
 import com.zhang.rpc.server.ServiceInvoker;
@@ -45,7 +46,10 @@ public class ObjectServerHandler extends ChannelInboundHandlerAdapter {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        ctx.write(result);
+        RPCResponse response = new RPCResponse();
+        response.setResult(result);
+        ctx.write(response);
+        ctx.flush();
     }
 
     @Override

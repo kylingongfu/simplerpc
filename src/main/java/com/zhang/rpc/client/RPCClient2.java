@@ -13,7 +13,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-import objectecho.ObjectEchoClientHandler;
 
 /**
  * Created by zhangc on 2018/5/28.
@@ -47,7 +46,7 @@ public class RPCClient2 {
                                     new ObjectEncoder(),
                                     new ObjectDecoder(ClassResolvers.cacheDisabled(null)),
                                    // new ObjectEchoClientHandler());
-                                    new ClientHandler(response));
+                                    new ClientHandler(response, obj));
                         }
                     });
 

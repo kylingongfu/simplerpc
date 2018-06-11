@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by zhangc on 2018/5/28.
  */
-@RPCService("HelloWorld")
+@RPCService(HelloWorld.class)
 public class HelloWorldImpl implements HelloWorld{
     @Override
     public String sayHi() {
