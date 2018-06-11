@@ -32,7 +32,7 @@ public class ClientTest {
     @Test(timeout = 10000)
     public void ClientHelloTest(){
         HelloWorld h = new RPCClientProxy().create(HelloWorld.class);
-        assertEquals("hello my world.",h);
+        assertEquals("hello my world.",h.sayHi());
     }
 
 

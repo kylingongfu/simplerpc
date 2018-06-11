@@ -22,11 +22,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
      * @param objMonitor 用于在异步线程间控制多线程同步的中介对象
      */
     public ClientHandler(RPCResponse response, Object objMonitor) {
-        /*firstMessage = Unpooled.buffer(256);
-        for (int i = 0; i < firstMessage.capacity(); i ++) {
-            firstMessage.writeByte((byte) i);
-        }*/
-        //response = new RPCResponse();
+
         this.response = response;
         this.objMonitor = objMonitor;
     }
@@ -41,9 +37,11 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         //ctx.write(msg);
         logger.debug("client channelRead msg:"+msg);
-        response.setResult(msg);
+        response = (RPCResponse) msg;
+        //response.setResult(());
         synchronized (objMonitor){
-            objMonitor.notify();
+            objMonitor.notifyAll();
+
         }
 
     }

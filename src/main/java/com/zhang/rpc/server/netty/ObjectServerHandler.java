@@ -15,12 +15,14 @@
  */
 package com.zhang.rpc.server.netty;
 
+import com.zhang.rpc.RPCRequest;
 import com.zhang.rpc.RPCResponse;
 import com.zhang.rpc.server.RPCServerContext;
-import com.zhang.rpc.RPCRequest;
 import com.zhang.rpc.server.ServiceInvoker;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -29,6 +31,7 @@ import java.lang.reflect.InvocationTargetException;
  * constructor was called.
  */
 public class ObjectServerHandler extends ChannelInboundHandlerAdapter {
+    Logger logger = LogManager.getLogger(ObjectServerHandler.class);
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
@@ -47,6 +50,7 @@ public class ObjectServerHandler extends ChannelInboundHandlerAdapter {
             e.printStackTrace();
         }
         RPCResponse response = new RPCResponse();
+        logger.debug("server handler set result "+result);
         response.setResult(result);
         ctx.write(response);
         ctx.flush();

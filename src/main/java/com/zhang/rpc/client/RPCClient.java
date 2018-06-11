@@ -10,11 +10,14 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Created by zhangc on 2018/5/28.
  */
 public class RPCClient {
+    Logger logger = LogManager.getLogger(RPCClient.class);
     private static Object obj = new Object();
 
     public <T> T send(RPCRequest rb) throws InterruptedException {
@@ -50,11 +53,14 @@ public class RPCClient {
             // 其意义是：先在此阻塞，等待获取到服务端的返回后，被唤醒，从而关闭网络连接
 
             synchronized (obj) {
+                System.out.println(obj.hashCode()+" cod from client");
                 obj.wait();
+                System.out.println(response.getResult()+" result from client aaaa");
             }
             if (response != null && response.getResult() != null) {
                 future.channel().closeFuture().sync();
             }
+            System.out.println(response.getResult()+" result from client");
             return (T) response.getResult();
         } finally {
             // Shut down the event loop to terminate all threads.
