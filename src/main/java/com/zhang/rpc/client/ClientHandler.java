@@ -36,12 +36,11 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         //ctx.write(msg);
-        logger.debug("client channelRead msg:"+msg);
-        response = (RPCResponse) msg;
-        //response.setResult(());
+        logger.debug("client channelRead msg:"+(RPCResponse)msg);
+        //response = (RPCResponse) msg;
+        response.setResult(((RPCResponse) msg).getResult());
         synchronized (objMonitor){
             objMonitor.notifyAll();
-
         }
 
     }

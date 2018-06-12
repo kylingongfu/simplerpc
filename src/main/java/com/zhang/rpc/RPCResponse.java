@@ -12,6 +12,13 @@ public class RPCResponse implements Serializable {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "RPCResponse{" +
+                "result=" + result +
+                '}';
+    }
+
     public void setResult(Object result) {
         this.result = result;
     }

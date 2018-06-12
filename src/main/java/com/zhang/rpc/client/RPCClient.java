@@ -17,8 +17,11 @@ import org.apache.logging.log4j.Logger;
  * Created by zhangc on 2018/5/28.
  */
 public class RPCClient {
+    private static final ObjectEncoder encoder = new ObjectEncoder();
+    private static final ObjectDecoder decoder = new ObjectDecoder(ClassResolvers.cacheDisabled(null));
     Logger logger = LogManager.getLogger(RPCClient.class);
     private static Object obj = new Object();
+
 
     public <T> T send(RPCRequest rb) throws InterruptedException {
         // Configure the client.
@@ -53,18 +56,18 @@ public class RPCClient {
             // 其意义是：先在此阻塞，等待获取到服务端的返回后，被唤醒，从而关闭网络连接
 
             synchronized (obj) {
-                System.out.println(obj.hashCode()+" cod from client");
                 obj.wait();
-                System.out.println(response.getResult()+" result from client aaaa");
             }
+            /*此段代码会使程序阻塞，原因不明
             if (response != null && response.getResult() != null) {
                 future.channel().closeFuture().sync();
             }
-            System.out.println(response.getResult()+" result from client");
-            return (T) response.getResult();
+            */
         } finally {
             // Shut down the event loop to terminate all threads.
             group.shutdownGracefully();
         }
+        T t = (T) response.getResult();
+        return t;
     }
 }

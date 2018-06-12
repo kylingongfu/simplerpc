@@ -3,6 +3,8 @@ import com.zhang.rpc.client.RPCClientProxy;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -29,10 +31,16 @@ public class ClientTest {
         assertEquals(1,1);
     }
 
-    @Test(timeout = 10000)
+    @Test(timeout = 3000)
     public void ClientHelloTest(){
         HelloWorld h = new RPCClientProxy().create(HelloWorld.class);
         assertEquals("hello my world.",h.sayHi());
+    }
+
+    @Test
+    public void ClientListNamesTest(){
+        HelloWorld h = new RPCClientProxy().create(HelloWorld.class);
+        assertEquals(Arrays.asList("Tom","Jerry","David"),h.getNames());
     }
 
 
